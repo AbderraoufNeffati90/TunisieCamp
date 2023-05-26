@@ -34,13 +34,12 @@ public class CampingCenterServiceImp implements CampingCenterService {
         return campingCenterRepository.findById(id).orElse(null);
     }
     @Override
-
     public void AddCampingCenter(CampingCenter campingCenter) {
         CampingCenter newCampingCenter = new CampingCenter();
-        newCampingCenter.setName(newCampingCenter.getName());
-        newCampingCenter.setAddress(newCampingCenter.getAddress());
-        newCampingCenter.setPhoneNumber(newCampingCenter.getPhoneNumber());
-        newCampingCenter.setEmail(newCampingCenter.getEmail());
+        newCampingCenter.setName(campingCenter.getName());
+        newCampingCenter.setAddress(campingCenter.getAddress());
+        newCampingCenter.setPhoneNumber(campingCenter.getPhoneNumber());
+        newCampingCenter.setEmail(campingCenter.getEmail());
 
         campingCenterRepository.save(newCampingCenter);
     }
@@ -51,12 +50,12 @@ public class CampingCenterServiceImp implements CampingCenterService {
 
         if (campingCenterOptional.isPresent()) {
             CampingCenter campingCenter1 = campingCenterOptional.get();
-            campingCenter1.setName(campingCenter1.getName());
-            campingCenter1.setAddress(campingCenter1.getAddress());
-            campingCenter1.setPhoneNumber(campingCenter1.getPhoneNumber());
-            campingCenter1.setEmail(campingCenter1.getEmail());
+            campingCenter1.setName(campingCenter.getName());
+            campingCenter1.setAddress(campingCenter.getAddress());
+            campingCenter1.setPhoneNumber(campingCenter.getPhoneNumber());
+            campingCenter1.setEmail(campingCenter.getEmail());
 
-            campingCenterRepository.save(campingCenter1);
+            campingCenterRepository.save(campingCenter);
         }
     }
 @Override

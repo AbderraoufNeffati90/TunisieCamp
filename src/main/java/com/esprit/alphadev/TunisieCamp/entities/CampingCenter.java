@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.List;
 
 @Entity
@@ -20,7 +21,8 @@ public class CampingCenter {
         private Long idCentre;
         private String name;
         private String address;
-        private String phoneNumber;
+        private Integer phoneNumber;
+        @Email
         private String email;
 
         @OneToMany(mappedBy = "campingCenter")

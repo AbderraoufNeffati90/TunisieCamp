@@ -9,5 +9,7 @@ public interface ActivityService {
 
     void addActivityToCampsite(Long campsiteId, @NotNull Activity activity);
 
-    List<Activity> getActivitiesByCampsiteId(Long campsiteId);
+
+
+    List<Activity> getActivitiesByCampsiteName(String campsiteName);
 }

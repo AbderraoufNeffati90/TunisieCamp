@@ -1,11 +1,22 @@
 package com.esprit.alphadev.TunisieCamp.service;
 
 import com.esprit.alphadev.TunisieCamp.entities.CampSite;
+import com.esprit.alphadev.TunisieCamp.entities.CampingCenter;
 
 import java.util.List;
 
 public interface CampSiteService {
-    void addCampsiteToCampingCenter(Long campingCenterId, CampSite campsite);
 
-    List<CampSite> getCampsitesByCampingCenter(Long campingCenterId);
+
+    CampSite addCampsiteToCampingCenter(CampSite campsite, Long idCentre);
+
+
+
+    List<CampSite> getCampsitesByCampingCenter(String name);
+
+    boolean isCampsiteAvailable(CampSite campsite);
+
+    void updateCampsite(String name, CampSite updatedCampsite);
+
+    void deleteCampsiteByName(String name);
 }

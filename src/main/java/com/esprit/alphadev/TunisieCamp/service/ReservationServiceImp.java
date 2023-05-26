@@ -8,6 +8,7 @@ import com.esprit.alphadev.TunisieCamp.repository.ReservationRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 
@@ -17,22 +18,27 @@ public class ReservationServiceImp implements ReservationService {
 
 
 
-@Override
-    public void makeReservation(Reservation reservation, String campsiteName) {
-
+    @Override
+    public void makeReservation(Reservation reservation, String name) {
         Reservation reservation1 = new Reservation();
 
-        reservation1.setUser(reservation1.getUser());
-        reservation1.setCampingCenter(reservation1.getCampingCenter());
+        reservation1.setUser(reservation.getUser());
+        reservation1.setCampingCenter(reservation.getCampingCenter());
 
-        CampSite campsite = campSiteRepository.findByName(campsiteName)
-            .orElseThrow(() -> new IllegalArgumentException("Campsite not found"));
-        reservation1.setCampsite(campsite);
-        reservation1.setStartDate(reservation1.getStartDate());
-        reservation1.setEndDate(reservation1.getEndDate());
+        Optional<CampSite> campsiteOptional = Optional.ofNullable(campSiteRepository.findByName(name));
+        if (campsiteOptional.isPresent()) {
+            CampSite campsite = campsiteOptional.get();
+            reservation1.setCampsite(campsite);
+            reservation1.setStartDate(reservation.getStartDate());
+            reservation1.setEndDate(reservation.getEndDate());
 
-        reservationRepository.save(reservation1);
+            reservationRepository.save(reservation1);
+        } else {
+            throw new IllegalArgumentException("Campsite not found with name: " + name);
+        }
     }
+
+
 
     @Override
     public List<Reservation> getAllReservationsWithUsers() {

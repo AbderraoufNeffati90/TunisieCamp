@@ -5,14 +5,18 @@ import com.esprit.alphadev.TunisieCamp.entities.CampSite;
 import com.esprit.alphadev.TunisieCamp.repository.ActivityRepository;
 import com.esprit.alphadev.TunisieCamp.repository.CampSiteRepository;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 
 public class ActivityServiceImp  implements ActivityService{
+    @Autowired
     CampSiteRepository campSiteRepository;
+    @Autowired
     ActivityRepository activityRepository;
 
     @Override
@@ -28,13 +32,18 @@ public class ActivityServiceImp  implements ActivityService{
     }
 
     @Override
-    public List<Activity> getActivitiesByCampsiteId(Long campsiteId) {
-        // Retrieve the campsite by its ID
-        CampSite campsite = campSiteRepository.findById(campsiteId)
-                .orElseThrow(() -> new IllegalArgumentException("Campsite not found"));
+    public List<Activity> getActivitiesByCampsiteName(String name) {
+        // Retrieve the campsite by its name
+        Optional<CampSite> optionalCampsite = Optional.ofNullable(campSiteRepository.findByName(name));
 
-        // Return the list of activities associated with the campsite
-        return campsite.getActivities();
+        if (optionalCampsite.isPresent()) {
+            CampSite campsite = optionalCampsite.get();
+            // Return the list of activities associated with the campsite
+            return campsite.getActivities();
+        } else {
+            throw new IllegalArgumentException("Campsite not found");
+        }
     }
+
 
 }

@@ -15,18 +15,28 @@ import java.util.List;
 public class CampSiteController {
 
     CampSiteService campSiteService;
-    @PostMapping("/{campingCenterId}/campsites")
-    public ResponseEntity<String> addCampsiteToCampingCenter(@PathVariable Long campingCenterId, @RequestBody CampSite campsite) {
-        try {
-            campSiteService.addCampsiteToCampingCenter(campingCenterId, campsite);
-            return ResponseEntity.ok("Campsite added and assigned to camping center successfully");
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    @PostMapping("/add-to-camping-center")
+    public CampSite addCampsiteToCampingCenter(@RequestBody CampSite campsite, @RequestParam Long idCentre) {
+        return campSiteService.addCampsiteToCampingCenter(campsite, idCentre);
     }
-   @GetMapping("/{campingCenterId}/campsites")
-    public ResponseEntity<List<CampSite>> getCampsitesByCampingCenter(@PathVariable Long campingCenterId) {
-        List<CampSite> campsites = campSiteService.getCampsitesByCampingCenter(campingCenterId);
-        return ResponseEntity.ok(campsites);
+
+    @GetMapping("/{campingCenterName}/campsites")
+    public List<CampSite> getCampsitesByCampingCenter(@PathVariable String name) {
+        return campSiteService.getCampsitesByCampingCenter(name);
     }
+
+    @PutMapping("/{name}")
+    public ResponseEntity<String> updateCampsiteByName(@PathVariable String name, @RequestBody CampSite updatedCampsite) {
+        campSiteService.updateCampsite(name, updatedCampsite);
+        return ResponseEntity.ok("Campsite updated successfully");
+    }
+
+    @DeleteMapping("/delete-by-name")
+    public ResponseEntity<String> deleteCampsiteByName(@RequestParam String name) {
+        campSiteService.deleteCampsiteByName(name);
+        return ResponseEntity.ok("Campsite deleted successfully.");
+    }
+
+
+
 }

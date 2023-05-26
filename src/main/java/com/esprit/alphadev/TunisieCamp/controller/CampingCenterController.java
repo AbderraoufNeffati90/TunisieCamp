@@ -16,29 +16,29 @@ public class CampingCenterController {
 
     CampingCenterService campingCenterService;
 
-    @GetMapping("/camping-centers")
+    @GetMapping("/getall")
     public List<CampingCenter> getAllCampingCenters() {
         return campingCenterService.getAllCampingCenters();
     }
 
-    @GetMapping("/camping-centers/{id}")
+    @GetMapping("/get/{id}")
     public CampingCenter getCampingCenterById(@PathVariable Long id) {
         return campingCenterService.getCampingCenterById(id);
     }
-    @PostMapping("/camping-centers")
+    @PostMapping("/add")
     public ResponseEntity<String> AddCampingCenter(@RequestBody CampingCenter campingCenter) {
         campingCenterService.AddCampingCenter(campingCenter);
         return ResponseEntity.ok("Camping Center added successfully.");
     }
 
 
-    @PutMapping("/camping-centers/{name}")
+    @PutMapping("/update/{name}")
     public ResponseEntity<String> updateCampingCenter(@PathVariable String name, @RequestBody CampingCenter campingCenter) {
         campingCenterService.updateCampingCenter(name, campingCenter);
         return ResponseEntity.ok("Camping Center updated successfully.");
     }
 
-    @DeleteMapping("/camping-centers/{name}")
+    @DeleteMapping("/delete/{name}")
     public ResponseEntity<String> deleteCampingCenter(@PathVariable String name) {
         campingCenterService.deleteCampingCenter(name);
         return ResponseEntity.ok("Camping Center deleted successfully.");

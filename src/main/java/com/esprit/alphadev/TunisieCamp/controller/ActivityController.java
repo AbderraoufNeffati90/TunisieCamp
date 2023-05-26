@@ -21,9 +21,13 @@ public class ActivityController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/{campsiteId}/activities")
-    public ResponseEntity<List<Activity>> getActivitiesByCampsiteId(@PathVariable Long campsiteId) {
-        List<Activity> activities = activityService.getActivitiesByCampsiteId(campsiteId);
-        return ResponseEntity.ok(activities);
+    @GetMapping("/{campsiteName}/activities")
+    public ResponseEntity<List<Activity>> getActivitiesByCampsiteName(@PathVariable String name) {
+        try {
+            List<Activity> activities = activityService.getActivitiesByCampsiteName(name);
+            return ResponseEntity.ok(activities);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
