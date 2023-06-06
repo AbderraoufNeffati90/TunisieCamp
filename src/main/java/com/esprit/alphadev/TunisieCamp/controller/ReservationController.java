@@ -26,19 +26,11 @@ public class ReservationController {
         }
     }
 
-    @GetMapping("/with-users")
+    @GetMapping("/user")
     public List<Reservation> getAllReservationsWithUsers() {
         return reservationService.getAllReservationsWithUsers();
     }
-    @PostMapping("/confirm/{reservationId}")
-    public ResponseEntity<String> confirmReservation(@PathVariable Long reservationId) {
-        try {
-            reservationService.confirmReservation(reservationId);
-            return ResponseEntity.ok("Reservation confirmed successfully");
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
+
 
 
 }

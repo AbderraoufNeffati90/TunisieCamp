@@ -2,6 +2,7 @@ package com.esprit.alphadev.TunisieCamp.controller;
 
 import com.esprit.alphadev.TunisieCamp.entities.CampingCenter;
 import com.esprit.alphadev.TunisieCamp.service.CampingCenterService;
+import com.esprit.alphadev.TunisieCamp.service.FeedbackService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import java.util.List;
 public class CampingCenterController {
 
     CampingCenterService campingCenterService;
+    FeedbackService feedbackService;
 
     @GetMapping("/getall")
     public List<CampingCenter> getAllCampingCenters() {
@@ -25,11 +27,13 @@ public class CampingCenterController {
     public CampingCenter getCampingCenterById(@PathVariable Long id) {
         return campingCenterService.getCampingCenterById(id);
     }
-    @PostMapping("/add")
-    public ResponseEntity<String> AddCampingCenter(@RequestBody CampingCenter campingCenter) {
-        campingCenterService.AddCampingCenter(campingCenter);
-        return ResponseEntity.ok("Camping Center added successfully.");
+    @PostMapping
+    public ResponseEntity<String> AddCampingCenter(@RequestBody CampingCenter campingCenter,
+                                                   @RequestParam("userId") Long userId) {
+        campingCenterService.AddCampingCenter(campingCenter, userId);
+        return ResponseEntity.ok("CampingCenter added successfully.");
     }
+
 
 
     @PutMapping("/update/{name}")
@@ -49,4 +53,6 @@ public class CampingCenterController {
         List<CampingCenter> campingCenters = campingCenterService.searchCampingCenters(keyword);
         return ResponseEntity.ok(campingCenters);
     }
+
+
 }

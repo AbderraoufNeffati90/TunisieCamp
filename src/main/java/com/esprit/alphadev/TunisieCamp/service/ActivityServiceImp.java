@@ -6,18 +6,23 @@ import com.esprit.alphadev.TunisieCamp.repository.ActivityRepository;
 import com.esprit.alphadev.TunisieCamp.repository.CampSiteRepository;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-
 public class ActivityServiceImp  implements ActivityService{
     @Autowired
     CampSiteRepository campSiteRepository;
     @Autowired
     ActivityRepository activityRepository;
+
+
+
 
     @Override
 
@@ -27,8 +32,7 @@ public class ActivityServiceImp  implements ActivityService{
                 .orElseThrow(() -> new IllegalArgumentException("Campsite not found"));
         activity.setCampsite(campsite);
         activityRepository.save(activity);
-        campsite.getActivities().add(activity);
-        campSiteRepository.save(campsite);
+
     }
 
     @Override

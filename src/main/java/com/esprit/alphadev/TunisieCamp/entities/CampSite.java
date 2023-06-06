@@ -1,5 +1,7 @@
 package com.esprit.alphadev.TunisieCamp.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,14 +27,25 @@ public class CampSite {
     private Boolean isAvailable;
 
 
+
     @OneToMany(mappedBy = "campsite")
+    @JsonIgnore
     private List<Activity> activities;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "camping_center_id")
+ //   @JsonBackReference
+
     private CampingCenter campingCenter;
+
     @OneToMany(mappedBy = "campsite")
+    @JsonIgnore
     private List<Reservation> reservations;
 
 
+    public boolean isAvailable() {
+        return isAvailable;
+
+    }
 }

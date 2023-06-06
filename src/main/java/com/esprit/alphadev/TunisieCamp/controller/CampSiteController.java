@@ -3,10 +3,12 @@ package com.esprit.alphadev.TunisieCamp.controller;
 import com.esprit.alphadev.TunisieCamp.entities.CampSite;
 import com.esprit.alphadev.TunisieCamp.service.CampSiteService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
@@ -14,15 +16,18 @@ import java.util.List;
 
 public class CampSiteController {
 
+    @Autowired
     CampSiteService campSiteService;
     @PostMapping("/add-to-camping-center")
     public CampSite addCampsiteToCampingCenter(@RequestBody CampSite campsite, @RequestParam Long idCentre) {
         return campSiteService.addCampsiteToCampingCenter(campsite, idCentre);
     }
 
-    @GetMapping("/{campingCenterName}/campsites")
+    @GetMapping("/{name}")
     public List<CampSite> getCampsitesByCampingCenter(@PathVariable String name) {
-        return campSiteService.getCampsitesByCampingCenter(name);
+        List<CampSite> campsites = campSiteService.getCampsitesByCampingCenter(name);
+
+        return campsites;
     }
 
     @PutMapping("/{name}")

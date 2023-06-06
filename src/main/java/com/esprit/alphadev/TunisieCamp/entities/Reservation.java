@@ -19,7 +19,6 @@ public class Reservation {
     private Long id;
     @Temporal(TemporalType.DATE)
     private Date startDate;
-
     @Temporal(TemporalType.DATE)
     private Date endDate;
     private Boolean confirmed;

@@ -1,12 +1,11 @@
 package com.esprit.alphadev.TunisieCamp.service;
 
 import com.esprit.alphadev.TunisieCamp.entities.CampingCenter;
-import com.esprit.alphadev.TunisieCamp.repository.ActivityRepository;
-import com.esprit.alphadev.TunisieCamp.repository.CampSiteRepository;
-import com.esprit.alphadev.TunisieCamp.repository.CampingCenterRepository;
-import com.esprit.alphadev.TunisieCamp.repository.UserRepository;
+import com.esprit.alphadev.TunisieCamp.entities.User;
+import com.esprit.alphadev.TunisieCamp.repository.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,10 +15,19 @@ import java.util.Optional;
 @AllArgsConstructor
 @Slf4j
 public class CampingCenterServiceImp implements CampingCenterService {
+    @Autowired
     UserRepository userRepository;
+
+    @Autowired
     CampingCenterRepository campingCenterRepository;
+
+    @Autowired
     CampSiteRepository campsiteRepository;
+
+    @Autowired
     ActivityRepository activityRepository;
+    @Autowired
+    FeedbackRepository feedbackRepository;
 
 
     @Override
@@ -34,17 +42,21 @@ public class CampingCenterServiceImp implements CampingCenterService {
         return campingCenterRepository.findById(id).orElse(null);
     }
     @Override
-    public void AddCampingCenter(CampingCenter campingCenter) {
-        CampingCenter newCampingCenter = new CampingCenter();
-        newCampingCenter.setName(campingCenter.getName());
-        newCampingCenter.setAddress(campingCenter.getAddress());
-        newCampingCenter.setPhoneNumber(campingCenter.getPhoneNumber());
-        newCampingCenter.setEmail(campingCenter.getEmail());
-
-        campingCenterRepository.save(newCampingCenter);
+    public void AddCampingCenter(CampingCenter campingCenter, Long userId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            campingCenter.setUser(user);
+            campingCenterRepository.save(campingCenter);
+        } else {
+            throw new IllegalArgumentException("User not found with ID: " + userId);
+        }
     }
 
-@Override
+
+
+
+    @Override
     public void updateCampingCenter(String name, CampingCenter campingCenter) {
         Optional<CampingCenter> campingCenterOptional = campingCenterRepository.findByName(name);
 
@@ -69,8 +81,11 @@ public class CampingCenterServiceImp implements CampingCenterService {
 @Override
     public List<CampingCenter> searchCampingCenters(String keyword) {
         // Perform a search query based on the keyword
+
         return campingCenterRepository.searchByNameContainingIgnoreCase(keyword);
     }
+
+
 
 
 }

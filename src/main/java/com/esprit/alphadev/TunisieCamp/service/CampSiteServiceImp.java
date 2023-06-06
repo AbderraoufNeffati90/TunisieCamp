@@ -38,24 +38,27 @@ public class CampSiteServiceImp implements CampSiteService{
     @Override
     public List<CampSite> getCampsitesByCampingCenter(String name) {
         // Retrieve the camping center by its name
-        CampingCenter campingCenter = campingCenterRepository.findByName(name)
-                .orElseThrow(() -> new IllegalArgumentException("Camping center not found"));
+//        CampingCenter campingCenter = campingCenterRepository.findByName(name)
+//                .orElseThrow(() -> new IllegalArgumentException("Camping center not found"));
 
         // Get the campsites associated with the camping center
-        List<CampSite> campsites = campingCenter.getCampsites();
-
-        // Iterate through the campsites and set their availability status
-        for (CampSite campsite : campsites) {
-            boolean isAvailable = isCampsiteAvailable(campsite);
+        List<CampSite> campSiteList = campsiteRepository.findByCampingCenterNameLike(name);
+        for (CampSite campsite : campSiteList) {
+            boolean isAvailable = isAvailable(campsite);
             campsite.setIsAvailable(isAvailable);
         }
+        return  campSiteList;
 
-        return campsites;
+        // Iterate through the campsites and set their availability status
+
+
+
     }
 
+
     @Override
-    public boolean isCampsiteAvailable(CampSite campsite) {
-        int currentOccupancy = reservationRepository.countByCampsite(campsite);
+    public boolean isAvailable(CampSite campsite) {
+        Integer currentOccupancy = reservationRepository.sumNumberOfPeopleByCampsite(campsite);
         return currentOccupancy < campsite.getCapacity();
     }
 

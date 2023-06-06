@@ -14,7 +14,8 @@ public interface CampSiteService {
 
     List<CampSite> getCampsitesByCampingCenter(String name);
 
-    boolean isCampsiteAvailable(CampSite campsite);
+
+    boolean isAvailable(CampSite campsite);
 
     void updateCampsite(String name, CampSite updatedCampsite);
 

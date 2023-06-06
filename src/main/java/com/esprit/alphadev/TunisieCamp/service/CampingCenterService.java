@@ -9,11 +9,18 @@ public interface CampingCenterService {
 
     CampingCenter getCampingCenterById(Long id);
 
-    void AddCampingCenter(CampingCenter campingCenter);
+
+
+
+
+
+    void AddCampingCenter(CampingCenter campingCenter, Long userId);
 
     void updateCampingCenter(String name, CampingCenter campingCenter);
 
     void deleteCampingCenter(String name);
 
     List<CampingCenter> searchCampingCenters(String keyword);
+
+
 }
