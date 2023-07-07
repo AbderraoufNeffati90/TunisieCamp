@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.util.List;
 
 @Data
 @Entity
@@ -19,5 +20,13 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Role role ;
+
+    @OneToMany(mappedBy = "user")
+    private List<Feedback> feedbacks;
+
+    @OneToMany(mappedBy = "user")
+    private List<CampingCenter> campingCenters;
+    @OneToMany(mappedBy = "user")
+    private List<Reservation> reservations;
 
 }
