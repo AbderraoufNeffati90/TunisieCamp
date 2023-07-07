@@ -19,13 +19,13 @@ public class Product {
     @Column(name = "idProduct")
     private Integer idProduct;
     @Column(name = "reference")
-    private Integer reference;
+    private int reference;
     @Column(name = "name")
     private String name;
     @Column(name = "description")
     private String description;
     @Column(name = "price")
-    private Double price;
+    private double price;
     @Column(name = "isProductAvailable")
     private boolean isProductAvailable;
 

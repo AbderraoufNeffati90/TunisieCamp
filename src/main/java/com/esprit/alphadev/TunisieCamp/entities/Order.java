@@ -1,10 +1,7 @@
 package com.esprit.alphadev.TunisieCamp.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -18,6 +15,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 public class Order {
 
     @Id
@@ -27,7 +25,7 @@ public class Order {
     @Column(name = "creationDate")
     private LocalDate creationDate;
     @Column(name = "total")
-    private Double totalOrder;
+    private double totalOrder;
     @Column(name = "isOrderAvailable")
     private boolean isOrderAvailable;
 

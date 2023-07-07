@@ -19,9 +19,9 @@ public class OrderItem {
     @Column(name = "idOrderItem")
     private Integer idOrderItem;
     @Column(name = "quantity")
-    private Integer quantity;
+    private int quantity;
     @Column(name = "totalOrderItem")
-    private Double totalOrderItem;
+    private double totalOrderItem;
     @Column(name = "isOrderItemAvailable")
     private boolean isOrderItemAvailable;
 

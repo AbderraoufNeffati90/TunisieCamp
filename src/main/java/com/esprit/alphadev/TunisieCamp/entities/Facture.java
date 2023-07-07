@@ -22,7 +22,7 @@ public class Facture {
     @Column(name = "dateFacture")
     private LocalDate dateFacture;
     @Column(name = "totalFacture")
-    private Double totalFacture;
+    private double totalFacture;
     @Column(name = "isFactureAvailable")
     private boolean isFactureAvailable;
     @OneToOne(mappedBy = "facture", cascade = CascadeType.ALL, orphanRemoval = true)
