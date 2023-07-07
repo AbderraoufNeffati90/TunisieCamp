@@ -7,31 +7,31 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoyaltyCard {
+public class CreditCard {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idLoyaltyCard")
+    @Column(name = "idCreditCard")
     private Integer idLoyaltyCard;
 
-    @Column(name = "isLoyaltyCardAvailable")
-    private boolean isLoyaltyCardAvailable;
+    @Column(name = "isCreditCardAvailable")
+    private boolean isCreditCardAvailable;
 
 
-    @OneToMany(mappedBy = "loyaltyCard", cascade = CascadeType.ALL, orphanRemoval = false,
+    @OneToMany(mappedBy = "creditCard", cascade = CascadeType.ALL, orphanRemoval = false,
             fetch = FetchType.LAZY)
-    @JsonIgnoreProperties("loyaltyCard")
-    private List<Order> orders;
+    @JsonIgnoreProperties("creditCard")
+    private Set<Order> orders;
 
 
-    public void setOrders(List<Order> orders) {
+    public void setOrders(Set<Order> orders) {
         this.orders = orders;
     }
 }

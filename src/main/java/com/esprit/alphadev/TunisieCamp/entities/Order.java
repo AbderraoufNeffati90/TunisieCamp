@@ -47,7 +47,7 @@ public class Order {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "loyaltyCardId", nullable = false)
+    @JoinColumn(name = "creditCardId", nullable = false)
     //  @JsonBackReference
-    private LoyaltyCard loyaltyCard;
+    private CreditCard creditCard;
 }
