@@ -9,7 +9,8 @@ import java.util.List;
 
 public interface ReservationService {
 
-    void makeReservation(Reservation reservation, String name);
+
+    void makeReservation(Reservation reservation, String name , Long   idUser);
 
     List<Reservation> getAllReservationsWithUsers();
 
@@ -19,4 +20,8 @@ public interface ReservationService {
     boolean isCampsiteAvailable(CampSite campsite);
 
 
+    void updateReservation(Integer reservationId, Reservation updatedReservation);
+
+
+    void deleteReservation(Integer id);
 }

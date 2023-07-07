@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface FeedbackService {
 
-    void AddFeedback(Feedback feedback, Long id, Long campingCenterId);
+    void AddFeedback(Feedback feedback, Long id, Integer campingCenterId);
 
     void UpdateFeedback(Feedback updatedFeedback);
 
-    void deleteFeedback(Long feedbackId);
+    void deleteFeedback(Integer feedbackId);
 
     List<Feedback> getAllFeedbacks();
 

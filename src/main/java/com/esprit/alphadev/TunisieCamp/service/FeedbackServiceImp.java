@@ -14,10 +14,10 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
-public class FeedbackServiceImp implements FeedbackService{
+public class FeedbackServiceImp implements FeedbackService {
 
     @Autowired
     FeedbackRepository feedbackRepository;
@@ -27,23 +27,21 @@ public class FeedbackServiceImp implements FeedbackService{
     CampingCenterRepository campingCenterRepository;
     @Autowired
     ProhibitedWordRepository prohibitedWordRepository;
-    @Override
-    public void AddFeedback(Feedback feedback, Long id, Long campingCenterId) {
 
-        Optional<User> user = userRepository.findById(id);
-        Optional<CampingCenter> campingCenter = campingCenterRepository.findById(campingCenterId);
+    @Override
+    public void AddFeedback(Feedback feedback, Long id, Integer campingCenterId) {
+
+        User user = userRepository.findById(id).orElse(null);
+        CampingCenter campingCenter = campingCenterRepository.findById(campingCenterId).orElse(null);
         if (user == null) {
             throw new IllegalArgumentException("User not found with ID: " + id);
         }
-
         if (campingCenter == null) {
             throw new IllegalArgumentException("Camping center not found with ID: " + campingCenterId);
         }
-
-
-        Feedback newFeedback = new Feedback();
-        newFeedback.setRating(feedback.getRating());
-
+        feedback.setUser(user);
+        feedback.setCampingCenter(campingCenter);
+        // feedback.setRating(feedback.getRating());
         String sanitizedComment = sanitizeComment(feedback.getComment());
         feedback.setComment(sanitizedComment);
         // Set the current date
@@ -86,7 +84,7 @@ public class FeedbackServiceImp implements FeedbackService{
     }
 
     @Override
-    public void deleteFeedback(Long feedbackId) {
+    public void deleteFeedback(Integer feedbackId) {
         Feedback feedback = feedbackRepository.findById(feedbackId)
                 .orElseThrow(() -> new IllegalArgumentException("Feedback not found with ID: " + feedbackId));
 
@@ -94,11 +92,12 @@ public class FeedbackServiceImp implements FeedbackService{
     }
 
 
-@Override
+    @Override
     public List<Feedback> getAllFeedbacks() {
         // Retrieve all feedbacks from the database
         return feedbackRepository.findAll();
     }
+
     @Override
     public List<Feedback> getAllFeedbacksWithUsers() {
         // Retrieve all feedbacks from the database along with the associated users

@@ -7,9 +7,14 @@ import java.util.List;
 
 public interface ActivityService {
 
-    void addActivityToCampsite(Long campsiteId, @NotNull Activity activity);
+    void addActivityToCampsite(Integer campsiteId, @NotNull Activity activity);
 
 
 
     List<Activity> getActivitiesByCampsiteName(String campsiteName);
+
+
+    void updateActivity(Integer id, Activity activity);
+
+    void deleteActivity(Integer id);
 }

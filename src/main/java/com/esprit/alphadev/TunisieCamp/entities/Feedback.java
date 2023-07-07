@@ -1,5 +1,6 @@
 package com.esprit.alphadev.TunisieCamp.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +22,7 @@ import java.util.Date;
 public class Feedback {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idFeed;
+    private Integer idFeed;
     @Min(value = 0)
     @Max(value = 5)
     private Integer rating;
@@ -36,9 +37,11 @@ public class Feedback {
 
     @ManyToOne
     @JoinColumn(name = "id")
+    @JsonIgnore
     private User user;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "idCenter")
     private CampingCenter campingCenter;
 

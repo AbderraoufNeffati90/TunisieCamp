@@ -1,14 +1,13 @@
 package com.esprit.alphadev.TunisieCamp.service;
 
 import com.esprit.alphadev.TunisieCamp.entities.CampSite;
-import com.esprit.alphadev.TunisieCamp.entities.CampingCenter;
 
 import java.util.List;
 
 public interface CampSiteService {
 
 
-    CampSite addCampsiteToCampingCenter(CampSite campsite, Long idCentre);
+    CampSite addCampsiteToCampingCenter(CampSite campsite, Integer idCentre);
 
 
 
@@ -20,4 +19,6 @@ public interface CampSiteService {
     void updateCampsite(String name, CampSite updatedCampsite);
 
     void deleteCampsiteByName(String name);
+
+    List<CampSite> searchCampsites(String keyword);
 }

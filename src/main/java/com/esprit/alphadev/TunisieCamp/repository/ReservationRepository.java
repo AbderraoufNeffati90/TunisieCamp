@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 
-public interface ReservationRepository extends JpaRepository<Reservation,Long> {
+public interface ReservationRepository extends JpaRepository<Reservation,Integer> {
 
      @Query("SELECT SUM(r.numberOfPeople) FROM Reservation r WHERE r.campsite = :campsite")
      Integer sumNumberOfPeopleByCampsite(@Param("campsite") CampSite campsite);

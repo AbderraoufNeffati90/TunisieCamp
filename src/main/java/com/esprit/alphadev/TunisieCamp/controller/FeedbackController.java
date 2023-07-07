@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @AllArgsConstructor
 @RequestMapping("/feedbacks")
@@ -19,7 +20,7 @@ public class FeedbackController {
     public ResponseEntity<String>AddFeedback (
             @RequestBody Feedback feedback,
             @PathVariable("userId") Long userId,
-            @PathVariable("campingCenterId") Long campingCenterId) {
+            @PathVariable("campingCenterId") Integer campingCenterId) {
 
         try {
             feedbackService.AddFeedback(feedback, userId, campingCenterId);
@@ -39,7 +40,7 @@ public class FeedbackController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> UpdateFeedback(@PathVariable("id") Long feedbackId, @RequestBody Feedback updatedFeedback) {
+    public ResponseEntity<String> UpdateFeedback(@PathVariable("id") Integer feedbackId, @RequestBody Feedback updatedFeedback) {
         try {
             // Set the ID of the updated feedback
             updatedFeedback.setIdFeed(feedbackId);
@@ -56,7 +57,7 @@ public class FeedbackController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteFeedback(@PathVariable("id") Long feedbackId) {
+    public ResponseEntity<String> deleteFeedback(@PathVariable("id") Integer feedbackId) {
         try {
             feedbackService.deleteFeedback(feedbackId);
             return ResponseEntity.ok().body("Feedback deleted successfully");

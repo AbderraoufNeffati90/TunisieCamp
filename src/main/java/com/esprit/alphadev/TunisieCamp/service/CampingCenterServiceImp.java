@@ -35,12 +35,14 @@ public class CampingCenterServiceImp implements CampingCenterService {
         return campingCenterRepository.findAll();
 
     }
+
     @Override
 
-    public CampingCenter getCampingCenterById(Long id) {
+    public CampingCenter getCampingCenterById(Integer id) {
 
         return campingCenterRepository.findById(id).orElse(null);
     }
+
     @Override
     public void AddCampingCenter(CampingCenter campingCenter, Long userId) {
         Optional<User> userOptional = userRepository.findById(userId);
@@ -52,9 +54,6 @@ public class CampingCenterServiceImp implements CampingCenterService {
             throw new IllegalArgumentException("User not found with ID: " + userId);
         }
     }
-
-
-
 
     @Override
     public void updateCampingCenter(String name, CampingCenter campingCenter) {
@@ -70,7 +69,8 @@ public class CampingCenterServiceImp implements CampingCenterService {
             campingCenterRepository.save(campingCenter);
         }
     }
-@Override
+
+    @Override
     public void deleteCampingCenter(String name) {
         Optional<CampingCenter> campingCenterOptional = campingCenterRepository.findByName(name);
 
@@ -78,14 +78,13 @@ public class CampingCenterServiceImp implements CampingCenterService {
             campingCenterRepository.delete(campingCenter);
         });
     }
-@Override
+
+    @Override
     public List<CampingCenter> searchCampingCenters(String keyword) {
         // Perform a search query based on the keyword
 
         return campingCenterRepository.searchByNameContainingIgnoreCase(keyword);
     }
-
-
 
 
 }

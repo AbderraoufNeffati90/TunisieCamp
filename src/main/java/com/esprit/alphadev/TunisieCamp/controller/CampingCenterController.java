@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @AllArgsConstructor
 @RequestMapping("/camping-centers")
@@ -24,16 +24,21 @@ public class CampingCenterController {
     }
 
     @GetMapping("/get/{id}")
-    public CampingCenter getCampingCenterById(@PathVariable Long id) {
+    public CampingCenter getCampingCenterById(@PathVariable Integer id) {
         return campingCenterService.getCampingCenterById(id);
     }
+
     @PostMapping
-    public ResponseEntity<String> AddCampingCenter(@RequestBody CampingCenter campingCenter,
-                                                   @RequestParam("userId") Long userId) {
-        campingCenterService.AddCampingCenter(campingCenter, userId);
+    public ResponseEntity<String> AddCampingCenter(
+            @RequestParam("userId") Integer userId,
+            @RequestBody CampingCenter campingCenter
+                                                   ) {
+
+
+        Long l = new Long(userId);
+        campingCenterService.AddCampingCenter(campingCenter, l);
         return ResponseEntity.ok("CampingCenter added successfully.");
     }
-
 
 
     @PutMapping("/update/{name}")

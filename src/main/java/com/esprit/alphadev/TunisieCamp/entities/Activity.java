@@ -17,7 +17,7 @@ import java.util.Date;
 public class Activity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_act;
+    private Integer id_act;
     private String name;
     private String description;
     private Date dateActivity;

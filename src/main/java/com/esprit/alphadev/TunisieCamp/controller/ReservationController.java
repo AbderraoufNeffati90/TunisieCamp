@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @AllArgsConstructor
 @RequestMapping("/reservations")
@@ -16,11 +17,13 @@ public class ReservationController {
 
 
 
-    @PostMapping("/make")
-    public ResponseEntity<String> makeReservation(@RequestBody Reservation reservation, @RequestParam String campsiteName) {
+    @PostMapping("/make/{idUser}")
+    public ResponseEntity<String> makeReservation(@RequestBody Reservation reservation,
+                                                  @RequestParam String campsiteName,
+                                                  @PathVariable("idUser") Long idUser) {
         try {
-            reservationService.makeReservation(reservation, campsiteName);
-            return ResponseEntity.ok("Reservation made successfully");
+            reservationService.makeReservation(reservation, campsiteName , idUser);
+            return ResponseEntity.ok("Reservation created successfully");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -28,7 +31,23 @@ public class ReservationController {
 
     @GetMapping("/user")
     public List<Reservation> getAllReservationsWithUsers() {
+
         return reservationService.getAllReservationsWithUsers();
+    }
+    @PutMapping("/{reservationId}")
+    public ResponseEntity<String> updateReservation(@PathVariable Integer reservationId, @RequestBody Reservation updatedReservation) {
+        try {
+            reservationService.updateReservation(reservationId, updatedReservation);
+            return ResponseEntity.ok("Reservation updated successfully");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteReservation(@PathVariable Integer id) {
+        reservationService.deleteReservation(id);
+        return ResponseEntity.ok("Reservation deleted successfully");
     }
 
 

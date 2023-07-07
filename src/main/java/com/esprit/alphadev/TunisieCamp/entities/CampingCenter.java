@@ -20,10 +20,10 @@ import java.util.List;
 public class CampingCenter {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long idCentre;
+        private Integer idCentre;
         private String name;
         private String address;
-        private String phoneNumber;
+        private Double phoneNumber;
         @Email
         private String email;
 

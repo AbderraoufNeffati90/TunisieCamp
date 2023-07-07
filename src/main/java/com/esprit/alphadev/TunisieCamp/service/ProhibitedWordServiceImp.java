@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 
-public class ProhibitedWordServiceImp implements ProhibitedWordService{
+public class ProhibitedWordServiceImp implements ProhibitedWordService {
 
     @Autowired
     ProhibitedWordRepository prohibitedWordRepository;
@@ -27,5 +27,10 @@ public class ProhibitedWordServiceImp implements ProhibitedWordService{
         }
         prohibitedWordRepository.saveAll(prohibitedWords);
     }
+    @Override
+    public List<ProhibitedWord> getAllProhibitedWords() {
+        return prohibitedWordRepository.findAll();
+    }
+
 
 }

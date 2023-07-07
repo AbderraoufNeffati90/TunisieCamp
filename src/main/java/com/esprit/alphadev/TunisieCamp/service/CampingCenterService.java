@@ -7,7 +7,7 @@ import java.util.List;
 public interface CampingCenterService {
     List<CampingCenter> getAllCampingCenters();
 
-    CampingCenter getCampingCenterById(Long id);
+    CampingCenter getCampingCenterById(Integer id);
 
 
 

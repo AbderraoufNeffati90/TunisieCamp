@@ -12,28 +12,28 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CampSiteServiceImp implements CampSiteService{
+public class CampSiteServiceImp implements CampSiteService {
     @Autowired
 
-     CampingCenterRepository campingCenterRepository;
+    CampingCenterRepository campingCenterRepository;
     @Autowired
-     CampSiteRepository campsiteRepository;
+    CampSiteRepository campsiteRepository;
     @Autowired
     ReservationRepository reservationRepository;
 
-     @Override
+    @Override
 
-     public CampSite addCampsiteToCampingCenter(CampSite campsite, Long idCentre) {
-         Optional<CampingCenter> optionalCampingCenter = campingCenterRepository.findById(idCentre);
-         if (optionalCampingCenter.isPresent()) {
-             CampingCenter campingCenter = optionalCampingCenter.get();
-             campsite.setCampingCenter(campingCenter);
-             campingCenter.getCampsites().add(campsite);
-             return campsiteRepository.save(campsite);
-         } else {
-             throw new IllegalArgumentException("Camping Center with ID " + idCentre + " not found.");
-         }
-     }
+    public CampSite addCampsiteToCampingCenter(CampSite campsite, Integer idCentre) {
+        Optional<CampingCenter> optionalCampingCenter = campingCenterRepository.findById(idCentre);
+        if (optionalCampingCenter.isPresent()) {
+            CampingCenter campingCenter = optionalCampingCenter.get();
+            campsite.setCampingCenter(campingCenter);
+            campingCenter.getCampsites().add(campsite);
+            return campsiteRepository.save(campsite);
+        } else {
+            throw new IllegalArgumentException("Camping Center with ID " + idCentre + " not found.");
+        }
+    }
 
     @Override
     public List<CampSite> getCampsitesByCampingCenter(String name) {
@@ -47,10 +47,9 @@ public class CampSiteServiceImp implements CampSiteService{
             boolean isAvailable = isAvailable(campsite);
             campsite.setIsAvailable(isAvailable);
         }
-        return  campSiteList;
+        return campSiteList;
 
         // Iterate through the campsites and set their availability status
-
 
 
     }
@@ -77,6 +76,17 @@ public class CampSiteServiceImp implements CampSiteService{
 
     @Override
     public void deleteCampsiteByName(String name) {
-        campsiteRepository.deleteByName(name);
+        Optional<CampSite> campSiteOptional = Optional.ofNullable(campsiteRepository.findByName(name));
+
+        campSiteOptional.ifPresent(campingCenter -> {
+            campsiteRepository.delete(campingCenter);
+        });
+    }
+
+    @Override
+    public List<CampSite> searchCampsites(String keyword) {
+        // Perform a search query based on the keyword
+
+        return campsiteRepository.searchByNameContainingIgnoreCase(keyword);
     }
 }
